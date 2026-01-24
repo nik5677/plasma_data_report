@@ -1,0 +1,81 @@
+%! Author = nikodem
+%! Date = 24/01/2026
+
+% Preamble
+\documentclass[11pt]{article}
+
+% Packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{polski}
+
+% Hyperref configuration
+\hypersetup{
+    colorlinks=true,
+    linkcolor=cyan,
+    filecolor=magenta,
+    urlcolor=blue
+}
+
+% Graphics directory
+\graphicspath{ {./figures/} }
+
+% Document
+\begin{document}
+
+\section{Wstęp}\label{sec:wstep}
+
+\subsection{Cel pracy}\label{subsec:cel-pracy}
+
+Celem niniejszej pracy jest analiza statystyczna oraz modelowanie dynamiki szeregu czasowego pochodzącego z rzeczywistego eksperymentu fizycznego.
+Przedmiotem badań jest natężenie prądu plazmy (ang.\ \emph{Plasma Current}, ) zarejestrowane w urządzeniu typu tokamak.
+
+Głównym zadaniem jest weryfikacja hipotezy o możliwości opisu fluktuacji prądu w fazie stabilnej (tzw.\ \emph{flat-top}) za pomocą liniowego modelu stochastycznego klasy ARMA. Analiza obejmuje zbadanie stacjonarności procesu, identyfikację rzędu modelu, estymację parametrów oraz weryfikację założeń dotyczących reszt.
+
+\subsection{Opis i źródło danych}\label{subsec:opis-i-zrodo-danych}
+
+Dane wykorzystane w projekcie pochodzą z reaktora fuzyjnego MAST (Mega Ampere Spherical Tokamak), znajdującego się w Culham Centre for Fusion Energy w Wielkiej Brytanii.
+Zostały pobrane za pośrednictwem otwartego interfejsu API udostępnionego w ramach projektu \href{https://mastapp.site/index.html}{FAIR-MAST}.
+
+Interpretacja fizyczna zmiennej:
+Analizowana zmienna to natężenie prądu plazmy \( ( I_p ) \), wyrażone w kiloamperach \( (\text{kA}) \).
+W uproszczeniu, parametr ten jest kluczowym wskaźnikiem ,,życia'' eksperymentu:
+
+\begin{itemize}
+    \item Wzrost prądu oznacza formowanie się plazmy.
+    \item Utrzymywanie stałej wartości (plateau) oznacza fazę stabilną, w której przeprowadza się właściwe eksperymenty.
+    \item Nagły spadek wartości do zera może sygnalizować niekontrolowaną utratę stabilności (tzw.\ disruption).
+\end{itemize}
+
+Dla potrzeb analizy szeregów czasowych, fluktuacje tego prądu w fazie stabilnej traktujemy jako proces stochastyczny, wynikający z turbulencji wewnątrz gorącego gazu oraz działania systemów sterowania reaktora.
+
+\subsection{Charakterystyka próby i wizualizacja}\label{subsec:charakterystyka-proby-i-wizualizacja}
+
+Do analizy wybrano eksperyment (tzw.\ ,,strzał'') o numerze ID: 30421.
+
+Pełny przebieg eksperymentu trwa niespełna 1/2 sekundy.
+Ze względu na niestacjonarny charakter całego procesu (faza rozruchu i wygaszania), do modelowania ARMA wyodrębniono wycinek czasowy odpowiadający fazie stabilnej.
+
+\begin{itemize}
+    \item Pełny zbiór: Czas około 6 s.
+    \item Zbiór analityczny (wycinek): 0.37 s (1850 obserwacji).
+\end{itemize}
+
+Poniższe wykresy prezentują surowe dane pomiarowe (rysunek~\ref{fig:fig1} oraz~\ref{fig:fig2}).
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{figure1}
+    \caption{Pełny przebieg natężenia prądu plazmy w czasie eksperymentu. Czerwonymi liniami zaznaczono obszar fazy stabilnej wybrany do analizy.}
+    \label{fig:fig1}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{figure2}
+    \caption{Wyodrębniony fragment szeregu czasowego (faza \emph{flat-top}) poddany modelowaniu ARMA.}
+    \label{fig:fig2}
+\end{figure}
+
+\end{document}

@@ -212,3 +212,6 @@ __marimo__/
 
 # macOS files
 .DS_Store
+
+# latex out files
+out
