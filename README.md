@@ -33,3 +33,4 @@ ność).
 ### Zakończenie
 - [ ] podsumowanie pracy,
 - [ ] wnioski.
+- [ ] bibliografia
