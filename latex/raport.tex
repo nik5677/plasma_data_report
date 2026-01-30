@@ -163,10 +163,18 @@
     \section{Modelowanie przy pomocy ARMA}\label{sec:modelowanie_ARMA}
 
     \subsection{Dobranie rzędu modelu i parametrów}\label{subsec:dobranie_arma}
-    dobralismy rzad modelu korzystajac z kryteriow informacyjnych w pakiecie pdarima.
-    wyszlo: Best model: ARMA(7,6)
 
-    parametry: {\color{red}TODO}
+    \begin{figure}[hp]
+        \centering
+        \includegraphics[width=1\textwidth]{dopasowanie_modelow}
+        \caption{{\color{red}CAPTION UZUPELNIC}}
+        \label{fig:dopasowanie_modelow}
+    \end{figure}
+
+    dobralismy rzad modelu korzystajac z kryteriow informacyjnych w pakiecie pdarima.
+    wyszlo: Best model: ARMA(7,6) (my uzylismy 5,5 z rysunku~\ref{fig:dopasowanie_modelow})
+
+    parametry: {\color{red}TODO (tabelka najlepiej)}
 
     \subsection{Ocena dopasowania modelu}\label{subsec:ocena_arma}
 
@@ -221,13 +229,40 @@
     \section{Weryfikacja założeń dotyczących szumu}\label{sec:weryfikacja-zaozen-dotyczacych-szumu}
 
     \subsection{Założenie dotyczące średniej}\label{subsec:zaozenie-dotyczace-sredniej}
+    \begin{figure}[hp]
+        \centering
+        \includegraphics[width=1\textwidth]{test_srednie}
+        \caption{{\color{red}CAPTION UZUPELNIC}}
+        \label{fig:test_srednie}
+    \end{figure}
+
+    Rysunek~\ref{fig:test_srednie}
 
     \subsection{Założenie dotyczące wariancji}\label{subsec:zaozenie-dotyczace-wariancji}
 
+    \begin{figure}[hp]
+        \centering
+        \includegraphics[width=1\textwidth]{test_wariancja}
+        \caption{{\color{red}CAPTION UZUPELNIC}}
+        \label{fig:test_wariancja}
+    \end{figure}
+
+    Rysunek~\ref{fig:test_wariancja}
+
     \subsection{Założenie dotyczące niezależności}\label{subsec:zaozenie-dotyczace-niezaleznosci}
+
+    Rysunek~\ref{fig:empiryczna_acf_po_dekompozycji_RESZTY} oraz Rysunek~\ref{fig:empiryczna_pacf_po_dekompozycji_RESZTY}
 
     \subsection{Założenie dotyczące normalności rozkładu}\label{subsec:zaozenie-dotyczace-normalnosci-rozkadu}
 
+    \begin{figure}[hp]
+        \centering
+        \includegraphics[width=1\textwidth]{test_normalnosc}
+        \caption{{\color{red}CAPTION UZUPELNIC}}
+        \label{fig:test_normalnosc}
+    \end{figure}
+
+    Rysunek~\ref{fig:test_normalnosc}
 
     \section{Wnioski}\label{sec:wnioski}
 
