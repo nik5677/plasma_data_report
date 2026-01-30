@@ -9,12 +9,14 @@
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{polski}
+\usepackage{xcolor}
 \usepackage[a4paper, total={6in, 8in}]{geometry}
 
+\definecolor{darkorchid}{HTML}{9932CC}
 % Hyperref configuration
 \hypersetup{
     colorlinks=true,
-    linkcolor=none,
+    linkcolor=darkorchid,
     filecolor=magenta,
     urlcolor=blue
 }
@@ -24,67 +26,212 @@
 
 % Title and authors
 
-\title{\textbf{Analiza szeregu czasowego X Y Z}}
+\title{\textbf{Analiza danych rzeczywistych natężenia prądu plazmy przy pomocy modelu ARMA}}
 \author{Dominika Lewandowska, Nikodem Drelak}
 
 % Document
 \begin{document}
 
-\maketitle
-\tableofcontents
+    \maketitle
+    \tableofcontents
 
-\section{Wstęp}\label{sec:wstep}
 
-\subsection{Cel pracy}\label{subsec:cel-pracy}
+    \section{Wstęp}\label{sec:wstep}
 
-Celem niniejszej pracy jest analiza statystyczna oraz modelowanie dynamiki szeregu czasowego pochodzącego z rzeczywistego eksperymentu fizycznego.
-Przedmiotem badań jest natężenie prądu plazmy (ang.\ \emph{Plasma Current}, ) zarejestrowane w urządzeniu typu tokamak.
+    \subsection{Cel pracy}\label{subsec:cel-pracy}
 
-Głównym zadaniem jest weryfikacja hipotezy o możliwości opisu fluktuacji prądu w fazie stabilnej (tzw.\ \emph{flat-top}) za pomocą liniowego modelu stochastycznego klasy ARMA. Analiza obejmuje zbadanie stacjonarności procesu, identyfikację rzędu modelu, estymację parametrów oraz weryfikację założeń dotyczących reszt.
+    Celem niniejszej pracy jest analiza statystyczna oraz modelowanie dynamiki szeregu czasowego pochodzącego z rzeczywistego eksperymentu fizycznego.
+    Przedmiotem badań jest natężenie prądu plazmy (ang.\ \emph{Plasma Current}) zarejestrowane w urządzeniu typu tokamak.
 
-\subsection{Opis i źródło danych}\label{subsec:opis-i-zrodo-danych}
+    Głównym zadaniem jest weryfikacja hipotezy o możliwości opisu fluktuacji prądu w fazie stabilnej (tzw.\ \emph{flat-top}) za pomocą liniowego modelu stochastycznego klasy ARMA. Analiza obejmuje zbadanie stacjonarności procesu, identyfikację rzędu modelu, estymację parametrów oraz weryfikację założeń dotyczących reszt.
 
-Dane wykorzystane w projekcie pochodzą z reaktora fuzyjnego MAST (Mega Ampere Spherical Tokamak), znajdującego się w Culham Centre for Fusion Energy w Wielkiej Brytanii.
-Zostały pobrane za pośrednictwem otwartego interfejsu API udostępnionego w ramach projektu \href{https://mastapp.site/index.html}{FAIR-MAST}.
+    \subsection{Opis i źródło danych}\label{subsec:opis-i-zrodo-danych}
 
-Interpretacja fizyczna zmiennej:
-Analizowana zmienna to natężenie prądu plazmy \( ( I_p ) \), wyrażone w kiloamperach \( (\text{kA}) \).
-W uproszczeniu, parametr ten jest kluczowym wskaźnikiem ,,życia'' eksperymentu:
+    Dane wykorzystane w projekcie pochodzą z reaktora fuzyjnego MAST (Mega Ampere Spherical Tokamak), znajdującego się w Culham Centre for Fusion Energy w Wielkiej Brytanii.
+    Zostały pobrane za pośrednictwem otwartego interfejsu API udostępnionego w ramach projektu \href{https://mastapp.site/index.html}{FAIR-MAST}.
 
-\begin{itemize}
-    \item Wzrost prądu oznacza formowanie się plazmy.
-    \item Utrzymywanie stałej wartości (plateau) oznacza fazę stabilną, w której przeprowadza się właściwe eksperymenty.
-    \item Nagły spadek wartości do zera może sygnalizować niekontrolowaną utratę stabilności (tzw.\ disruption).
-\end{itemize}
+    Interpretacja fizyczna zmiennej:
+    Analizowana zmienna to natężenie prądu plazmy \( ( I_p ) \), wyrażone w kiloamperach \( (\text{kA}) \).
+    W uproszczeniu, parametr ten jest kluczowym wskaźnikiem ,,życia'' eksperymentu:
 
-Dla potrzeb analizy szeregów czasowych, fluktuacje tego prądu w fazie stabilnej traktujemy jako proces stochastyczny, wynikający z turbulencji wewnątrz gorącego gazu oraz działania systemów sterowania reaktora.
+    \begin{itemize}
+        \item Wzrost prądu oznacza formowanie się plazmy.
+        \item Utrzymywanie stałej wartości (plateau) oznacza fazę stabilną, w której przeprowadza się właściwe eksperymenty.
+        \item Nagły spadek wartości do zera może sygnalizować niekontrolowaną utratę stabilności (tzw.\ disruption).
+    \end{itemize}
 
-\subsection{Charakterystyka próby i wizualizacja}\label{subsec:charakterystyka-proby-i-wizualizacja}
+    Dla potrzeb analizy szeregów czasowych, fluktuacje tego prądu w fazie stabilnej traktujemy jako proces stochastyczny, wynikający z turbulencji wewnątrz gorącego gazu oraz działania systemów sterowania reaktora.
 
-Do analizy wybrano eksperyment (tzw.\ ,,strzał'') o numerze ID: 30421.
+    \subsection{Charakterystyka próby i wizualizacja}\label{subsec:charakterystyka-proby-i-wizualizacja}
 
-Pełny przebieg eksperymentu trwa niespełna 1/2 sekundy.
-Ze względu na niestacjonarny charakter całego procesu (faza rozruchu i wygaszania), do modelowania ARMA wyodrębniono wycinek czasowy odpowiadający fazie stabilnej.
+    Do analizy wybrano eksperyment (tzw.\ \emph{shot}) o numerze ID: 30421.
+    Pełny przebieg eksperymentu (przedstawiony na rysunku~\ref{fig:fig1}) trwa około 6 sekund.
+    Ze względu na niestacjonarny charakter całego procesu (faza rozruchu i wygaszania), do modelowania ARMA wyodrębniono wycinek czasowy odpowiadający fazie stabilnej (rysunek~\ref{fig:fig2}).
+    Zbiór analityczny odpowiada 0,37 sekundy obserwacji i zawiera 1850 próbek.
+    W celu późniejszej weryfikacji poprawności modelowania ARMA dla przyszłych wartości, został on podzielony na zbiór treningowy - pierwsze 0,32 sekundy (1500 próbek) oraz zbiór testowy - ostatnie 0.05 sekund (250 próbek).
 
-\begin{itemize}
-    \item Pełny zbiór: Czas około 6 s.
-    \item Zbiór analityczny (wycinek): 0.37 s (1850 obserwacji).
-\end{itemize}
+    \begin{figure}[hp]
+        \centering
+        \includegraphics[width=1\textwidth]{figure1}
+        \caption{Pełny przebieg natężenia prądu plazmy w czasie eksperymentu. Półprzezroczystym obszarem zaznaczono obszar fazy stabilnej wybrany do analizy.}
+        \label{fig:fig1}
+    \end{figure}
 
-Poniższe wykresy prezentują surowe dane pomiarowe (rysunek~\ref{fig:fig1} oraz~\ref{fig:fig2}).
+    \begin{figure}[hp]
+        \centering
+        \includegraphics[width=1\textwidth]{figure2}
+        \caption{Wyodrębniony fragment szeregu czasowego (faza \emph{flat-top}) poddany modelowaniu ARMA. Półprzezroczystym obszarem zaznaczono obszar zbioru testowego.}
+        \label{fig:fig2}
+    \end{figure}
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=1\textwidth]{figure1}
-    \caption{Pełny przebieg natężenia prądu plazmy w czasie eksperymentu. Czerwonymi liniami zaznaczono obszar fazy stabilnej wybrany do analizy.}
-    \label{fig:fig1}
-\end{figure}
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=1\textwidth]{figure2}
-    \caption{Wyodrębniony fragment szeregu czasowego (faza \emph{flat-top}) poddany modelowaniu ARMA.}
-    \label{fig:fig2}
-\end{figure}
+    \section{Przygotowanie danych do analizy}\label{sec:przygotowanie}
+
+    \subsection{Analiza jakości danych}\label{subsec:analiza_jakosci}
+    Coś tam że dane nie mają braków itd.
+
+    \subsubsection{Analiza autokorelacji surowych danych}
+    \begin{figure}[hp]
+        \centering
+        \includegraphics[width=1\textwidth]{empiryczna_acf_surowe}
+        \caption{{\color{red}CAPTION UZUPELNIC}}
+        \label{fig:empiryczna_acf_surowe}
+    \end{figure}
+
+    Rysunek~\ref{fig:empiryczna_acf_surowe} przedstawia to i to.
+    Możemy wywnioskowac z tego, że cos tam.
+    Interpretujemy to tak i tak
+
+    \begin{figure}[hp]
+        \centering
+        \includegraphics[width=1\textwidth]{empiryczna_pacf_surowe}
+        \caption{{\color{red}CAPTION UZUPELNIC}}
+        \label{fig:empiryczna_pacf_surowe}
+    \end{figure}
+
+    Rysunek~\ref{fig:empiryczna_pacf_surowe} przedstawia to i to.
+    Możemy wywnioskowac z tego, że cos tam.
+    Interpretujemy to tak i tak
+
+    test ADF weryfikujący hipotezę o niestacjonarności dla surowych danych (Augmented Dickey-Fuller Test) dał takie wyniki:
+    Statystyka testowa = -0.665, p-value = 0.427 => Non-stationary.
+
+    \subsection{Dekompozycja szeregu czasowego}\label{subsec:dekompozycja}
+
+    \subsubsection{Różnicowanie danych}
+
+    \begin{figure}[hp]
+        \centering
+        \includegraphics[width=1\textwidth]{dekompozycja}
+        \caption{{\color{red}CAPTION UZUPELNIC}}
+        \label{fig:dekompozycja}
+    \end{figure}
+
+    Rysunek~\ref{fig:dekompozycja} przedstawia to i to.
+    Możemy wywnioskowac z tego, że cos tam.
+    Interpretujemy to tak i tak
+
+    \subsubsection{Ocena autokorelacji danych po dekompozycji}
+
+    \begin{figure}[hp]
+        \centering
+        \includegraphics[width=1\textwidth]{empiryczna_acf_po_dekompozycji}
+        \caption{{\color{red}CAPTION UZUPELNIC}}
+        \label{fig:empiryczna_acf_po_dekompozycji}
+    \end{figure}
+
+    Rysunek~\ref{fig:empiryczna_acf_po_dekompozycji} przedstawia to i to.
+    Możemy wywnioskowac z tego, że cos tam.
+    Interpretujemy to tak i tak
+
+    \begin{figure}[hp]
+        \centering
+        \includegraphics[width=1\textwidth]{empiryczna_pacf_po_dekompozycji}
+        \caption{{\color{red}CAPTION UZUPELNIC}}
+        \label{fig:empiryczna_pacf_po_dekompozycji}
+    \end{figure}
+
+    Rysunek~\ref{fig:empiryczna_pacf_po_dekompozycji} przedstawia to i to.
+    Możemy wywnioskowac z tego, że cos tam.
+    Interpretujemy to tak i tak
+
+
+    test ADF weryfikujący hipotezę o niestacjonarności dla danych po dekompozycji (Augmented Dickey-Fuller Test) dał takie wyniki:
+    Statystyka testowa = -14.148, p-Value = 0.0 => Stationary.
+
+
+    \section{Modelowanie przy pomocy ARMA}\label{sec:modelowanie_ARMA}
+
+    \subsection{Dobranie rzędu modelu i parametrów}\label{subsec:dobranie_arma}
+    dobralismy rzad modelu korzystajac z kryteriow informacyjnych w pakiecie pdarima.
+    wyszlo: Best model: ARMA(7,6)
+
+    parametry: {\color{red}TODO}
+
+    \subsection{Ocena dopasowania modelu}\label{subsec:ocena_arma}
+
+    \subsubsection{Autokorelacja reszt}
+    \begin{figure}[hp]
+        \centering
+        \includegraphics[width=1\textwidth]{empiryczna_acf_po_dekompozycji_RESZTY}
+        \caption{{\color{red}CAPTION UZUPELNIC}}
+        \label{fig:empiryczna_acf_po_dekompozycji_RESZTY}
+    \end{figure}
+
+    Rysunek~\ref{fig:empiryczna_acf_po_dekompozycji_RESZTY} przedstawia to i to.
+    Możemy wywnioskowac z tego, że cos tam.
+    Interpretujemy to tak i tak
+
+    \begin{figure}[hp]
+        \centering
+        \includegraphics[width=1\textwidth]{empiryczna_pacf_po_dekompozycji_RESZTY}
+        \caption{{\color{red}CAPTION UZUPELNIC}}
+        \label{fig:empiryczna_pacf_po_dekompozycji_RESZTY}
+    \end{figure}
+
+    Rysunek~\ref{fig:empiryczna_pacf_po_dekompozycji_RESZTY} przedstawia to i to.
+    Możemy wywnioskowac z tego, że cos tam.
+    Interpretujemy to tak i tak
+
+    \subsubsection{Analiza trajektorii ARMA w porównaniu do badanego szeregu}
+
+    \begin{figure}[hp]
+        \centering
+        \includegraphics[width=1\textwidth]{przedzialy_ufnosc_ARMA}
+        \caption{{\color{red}CAPTION UZUPELNIC}}
+        \label{fig:przedzialy_ufnosc_ARMA}
+    \end{figure}
+
+    Rysunek~\ref{fig:przedzialy_ufnosc_ARMA} przedstawia to i to.
+    Możemy wywnioskowac z tego, że cos tam.
+    Interpretujemy to tak i tak
+
+    \begin{figure}[hp]
+        \centering
+        \includegraphics[width=1\textwidth]{przedzialy_ufnosc_ARMA_PRZEWIDYWANA}
+        \caption{{\color{red}CAPTION UZUPELNIC}}
+        \label{fig:przedzialy_ufnosc_ARMA_PRZEWIDYWANA}
+    \end{figure}
+
+    Rysunek~\ref{fig:przedzialy_ufnosc_ARMA_PRZEWIDYWANA} przedstawia to i to.
+    Możemy wywnioskowac z tego, że cos tam.
+    Interpretujemy to tak i tak
+
+
+    \section{Weryfikacja założeń dotyczących szumu}\label{sec:weryfikacja-zaozen-dotyczacych-szumu}
+
+    \subsection{Założenie dotyczące średniej}\label{subsec:zaozenie-dotyczace-sredniej}
+
+    \subsection{Założenie dotyczące wariancji}\label{subsec:zaozenie-dotyczace-wariancji}
+
+    \subsection{Założenie dotyczące niezależności}\label{subsec:zaozenie-dotyczace-niezaleznosci}
+
+    \subsection{Założenie dotyczące normalności rozkładu}\label{subsec:zaozenie-dotyczace-normalnosci-rozkadu}
+
+
+    \section{Wnioski}\label{sec:wnioski}
+
+
+    \section{Podsumowanie}\label{sec:podsumowanie}
 
 \end{document}

@@ -19,15 +19,15 @@
   publisher={Elsevier}
 }
 
-@article{Quinn2021_joss,
-  doi = {10.21105/joss.02977},
-  url = {https://doi.org/10.21105/joss.02977},
-  year = {2021},
-  publisher = {The Open Journal},
-  volume = {6},
-  number = {59},
-  pages = {2977},
-  author = {Quinn, Andrew J. and Lopes-dos-Santos, Vitor and Dupret, David and Nobre, Anna C. and Woolrich, Mark W.},
-  title = {EMD: Empirical Mode Decomposition and Hilbert-Huang Spectral Analyses in Python},
-  journal = {Journal of Open Source Software}
-}
+@article{Gajda_2013,
+   title={Regime Variance Testing --- a Quantile Approach},
+   volume={44},
+   ISSN={1509-5770},
+   url={http://dx.doi.org/10.5506/APhysPolB.44.1015},
+   DOI={10.5506/aphyspolb.44.1015},
+   number={5},
+   journal={Acta Physica Polonica B},
+   publisher={Jagiellonian University},
+   author={Gajda, J. and Sikora, G. and Wyłomańska, A.},
+   year={2013},
+   pages={1015} }
