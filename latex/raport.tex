@@ -8,6 +8,7 @@
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage[all]{hypcap}
 \usepackage{polski}
 \usepackage{xcolor}
 \usepackage[a4paper, total={6in, 8in}]{geometry}
@@ -91,12 +92,8 @@
     Coś tam że dane nie mają braków itd.
 
     \subsubsection{Analiza autokorelacji surowych danych}
-    \begin{figure}[hp]
-        \centering
-        \includegraphics[width=1\textwidth]{empiryczna_acf_surowe}
-        \caption{{\color{red}CAPTION UZUPELNIC}}
-        \label{fig:empiryczna_acf_surowe}
-    \end{figure}
+
+    wzory i opisanie ACF i PACF co to i wgl
 
     Rysunek~\ref{fig:empiryczna_acf_surowe} przedstawia to i to.
     Możemy wywnioskowac z tego, że cos tam.
@@ -104,14 +101,21 @@
 
     \begin{figure}[hp]
         \centering
-        \includegraphics[width=1\textwidth]{empiryczna_pacf_surowe}
-        \caption{{\color{red}CAPTION UZUPELNIC}}
-        \label{fig:empiryczna_pacf_surowe}
+        \includegraphics[width=1\textwidth]{empiryczna_acf_surowe}
+        \caption{Wykres współczynnika autokorelacji surowych danych ze zbioru treningowego w zależności od opóźnienia (parametru $h$). Półprzezroczystym obszarem zaznaczono przedział ufności o poziomie 95\%.}
+        \label{fig:empiryczna_acf_surowe}
     \end{figure}
 
     Rysunek~\ref{fig:empiryczna_pacf_surowe} przedstawia to i to.
     Możemy wywnioskowac z tego, że cos tam.
     Interpretujemy to tak i tak
+
+    \begin{figure}[hp]
+        \centering
+        \includegraphics[width=1\textwidth]{empiryczna_pacf_surowe}
+        \caption{Wykres współczynnika częściowej autokorelacji surowych danych ze zbioru treningowego w zależności od opóźnienia (parametru $h$). Półprzezroczystym obszarem zaznaczono przedział ufności o poziomie 95\%.}
+        \label{fig:empiryczna_pacf_surowe}
+    \end{figure}
 
     test ADF weryfikujący hipotezę o niestacjonarności dla surowych danych (Augmented Dickey-Fuller Test) dał takie wyniki:
     Statystyka testowa = -0.665, p-value = 0.427 => Non-stationary.
@@ -119,26 +123,20 @@
     \subsection{Dekompozycja szeregu czasowego}\label{subsec:dekompozycja}
 
     \subsubsection{Różnicowanie danych}
-
-    \begin{figure}[hp]
-        \centering
-        \includegraphics[width=1\textwidth]{dekompozycja}
-        \caption{{\color{red}CAPTION UZUPELNIC}}
-        \label{fig:dekompozycja}
-    \end{figure}
+    co to roznicowanie danych itd
 
     Rysunek~\ref{fig:dekompozycja} przedstawia to i to.
     Możemy wywnioskowac z tego, że cos tam.
     Interpretujemy to tak i tak
 
-    \subsubsection{Ocena autokorelacji danych po dekompozycji}
-
     \begin{figure}[hp]
         \centering
-        \includegraphics[width=1\textwidth]{empiryczna_acf_po_dekompozycji}
-        \caption{{\color{red}CAPTION UZUPELNIC}}
-        \label{fig:empiryczna_acf_po_dekompozycji}
+        \includegraphics[width=1\textwidth]{dekompozycja}
+        \caption{Szereg czasowy ze zbioru treningowego poddany różnicowaniu. Przedstawia zmianę natężenia prądu w zależności od czasu.}
+        \label{fig:dekompozycja}
     \end{figure}
+
+    \subsubsection{Ocena autokorelacji danych po dekompozycji}
 
     Rysunek~\ref{fig:empiryczna_acf_po_dekompozycji} przedstawia to i to.
     Możemy wywnioskowac z tego, że cos tam.
@@ -146,15 +144,21 @@
 
     \begin{figure}[hp]
         \centering
-        \includegraphics[width=1\textwidth]{empiryczna_pacf_po_dekompozycji}
-        \caption{{\color{red}CAPTION UZUPELNIC}}
-        \label{fig:empiryczna_pacf_po_dekompozycji}
+        \includegraphics[width=1\textwidth]{empiryczna_acf_po_dekompozycji}
+        \caption{Wykres współczynnika autokorelacji danych ze zbioru treningowego poddanych różnicowaniu w zależności od opóźnienia (parametru $h$). Półprzezroczystym obszarem zaznaczono przedział ufności o poziomie 95\%.}
+        \label{fig:empiryczna_acf_po_dekompozycji}
     \end{figure}
 
     Rysunek~\ref{fig:empiryczna_pacf_po_dekompozycji} przedstawia to i to.
     Możemy wywnioskowac z tego, że cos tam.
     Interpretujemy to tak i tak
 
+    \begin{figure}[hp]
+        \centering
+        \includegraphics[width=1\textwidth]{empiryczna_pacf_po_dekompozycji}
+        \caption{Wykres współczynnika częściowej autokorelacji danych ze zbioru treningowego poddanych różnicowaniu w zależności od opóźnienia (parametru $h$). Półprzezroczystym obszarem zaznaczono przedział ufności o poziomie 95\%.}
+        \label{fig:empiryczna_pacf_po_dekompozycji}
+    \end{figure}
 
     test ADF weryfikujący hipotezę o niestacjonarności dla danych po dekompozycji (Augmented Dickey-Fuller Test) dał takie wyniki:
     Statystyka testowa = -14.148, p-Value = 0.0 => Stationary.
@@ -164,27 +168,26 @@
 
     \subsection{Dobranie rzędu modelu i parametrów}\label{subsec:dobranie_arma}
 
+    co to rzad modelu, BIC, AIC, jak sie dobiera itd
+    BIC (Bayesowskie Kryterium Informacyjne) i AIC (Kryterium Informacyjne Akaikego)
+    dobralismy rzad modelu korzystajac z kryteriow informacyjnych w pakiecie pdarima???
+    wyszlo: Best model: ARMA(7,6)???
+    (my uzylismy 5,5 z rysunku~\ref{fig:dopasowanie_modelow})
+
     \begin{figure}[hp]
         \centering
         \includegraphics[width=1\textwidth]{dopasowanie_modelow}
-        \caption{{\color{red}CAPTION UZUPELNIC}}
+        \caption{Heatmapa wartości kryteriów AIC oraz BIC w zależności od rzędów $p$ i $q$ modelu ARMA($p, q$) badanego szeregu. Jaśniejszy kolor oznacza niższą wartość kryterium.}
         \label{fig:dopasowanie_modelow}
     \end{figure}
-
-    dobralismy rzad modelu korzystajac z kryteriow informacyjnych w pakiecie pdarima.
-    wyszlo: Best model: ARMA(7,6) (my uzylismy 5,5 z rysunku~\ref{fig:dopasowanie_modelow})
 
     parametry: {\color{red}TODO (tabelka najlepiej)}
 
     \subsection{Ocena dopasowania modelu}\label{subsec:ocena_arma}
 
     \subsubsection{Autokorelacja reszt}
-    \begin{figure}[hp]
-        \centering
-        \includegraphics[width=1\textwidth]{empiryczna_acf_po_dekompozycji_RESZTY}
-        \caption{{\color{red}CAPTION UZUPELNIC}}
-        \label{fig:empiryczna_acf_po_dekompozycji_RESZTY}
-    \end{figure}
+    Reszty (błędy) w modelu ARMA/ARIMA reprezentują różnicę między obserwowanymi wartościami szeregu czasowego a wartościami przewidywanymi (dopasowanymi) przez model.
+    Poprawne reszty powinny zachowywać się jak „biały szum”, czyli mieć stałą wariancję, zerową średnią i brak autokorelacji.
 
     Rysunek~\ref{fig:empiryczna_acf_po_dekompozycji_RESZTY} przedstawia to i to.
     Możemy wywnioskowac z tego, że cos tam.
@@ -192,23 +195,23 @@
 
     \begin{figure}[hp]
         \centering
-        \includegraphics[width=1\textwidth]{empiryczna_pacf_po_dekompozycji_RESZTY}
-        \caption{{\color{red}CAPTION UZUPELNIC}}
-        \label{fig:empiryczna_pacf_po_dekompozycji_RESZTY}
+        \includegraphics[width=1\textwidth]{empiryczna_acf_po_dekompozycji_RESZTY}
+        \caption{Wykres współczynnika autokorelacji reszt modelu ARMA(5, 5) w zależności od opóźnienia (parametru $h$). Półprzezroczystym obszarem zaznaczono przedział ufności o poziomie 95\%.}
+        \label{fig:empiryczna_acf_po_dekompozycji_RESZTY}
     \end{figure}
 
     Rysunek~\ref{fig:empiryczna_pacf_po_dekompozycji_RESZTY} przedstawia to i to.
     Możemy wywnioskowac z tego, że cos tam.
     Interpretujemy to tak i tak
 
-    \subsubsection{Analiza trajektorii ARMA w porównaniu do badanego szeregu}
-
     \begin{figure}[hp]
         \centering
-        \includegraphics[width=1\textwidth]{przedzialy_ufnosc_ARMA}
-        \caption{{\color{red}CAPTION UZUPELNIC}}
-        \label{fig:przedzialy_ufnosc_ARMA}
+        \includegraphics[width=1\textwidth]{empiryczna_pacf_po_dekompozycji_RESZTY}
+        \caption{Wykres współczynnika częściowej autokorelacji reszt modelu ARMA(5, 5) w zależności od opóźnienia (parametru $h$). Półprzezroczystym obszarem zaznaczono przedział ufności o poziomie 95\%.}
+        \label{fig:empiryczna_pacf_po_dekompozycji_RESZTY}
     \end{figure}
+
+    \subsubsection{Analiza trajektorii ARMA w porównaniu do badanego szeregu}
 
     Rysunek~\ref{fig:przedzialy_ufnosc_ARMA} przedstawia to i to.
     Możemy wywnioskowac z tego, że cos tam.
@@ -216,57 +219,98 @@
 
     \begin{figure}[hp]
         \centering
-        \includegraphics[width=1\textwidth]{przedzialy_ufnosc_ARMA_PRZEWIDYWANA}
-        \caption{{\color{red}CAPTION UZUPELNIC}}
-        \label{fig:przedzialy_ufnosc_ARMA_PRZEWIDYWANA}
+        \includegraphics[width=1\textwidth]{przedzialy_ufnosc_ARMA}
+        \caption{Trajektoria szeregu czasowego ze zbioru treningowego poddanego różnicowaniu oraz trajektoria dopasowanego modelu ARMA(5, 5) wraz z przedziałami ufności o poziomie 95\%.}
+        \label{fig:przedzialy_ufnosc_ARMA}
     \end{figure}
 
     Rysunek~\ref{fig:przedzialy_ufnosc_ARMA_PRZEWIDYWANA} przedstawia to i to.
     Możemy wywnioskowac z tego, że cos tam.
     Interpretujemy to tak i tak
 
+    \begin{figure}[hp]
+        \centering
+        \includegraphics[width=1\textwidth]{przedzialy_ufnosc_ARMA_PRZEWIDYWANA}
+        \caption{Trajektoria szeregu czasowego ze zbioru treningowego i ze zbioru testowego poddanych różnicowaniu, oraz prognoza trajektorii dopasowanego modelu ARMA(5, 5) dla zbioru testowego wraz z przedziałami ufności o poziomie 95\%.}
+        \label{fig:przedzialy_ufnosc_ARMA_PRZEWIDYWANA}
+    \end{figure}
 
     \section{Weryfikacja założeń dotyczących szumu}\label{sec:weryfikacja-zaozen-dotyczacych-szumu}
 
     \subsection{Założenie dotyczące średniej}\label{subsec:zaozenie-dotyczace-sredniej}
+
+    Rysunek~\ref{fig:test_srednie}
+    co to za test i wgl:
+   Test Średniej (T-test):
+   Średnia reszt: -1.2344e-03
+   P-value: 0.9389
+    WNIOSEK: Brak podstaw do odrzucenia H0. Średnia jest równa 0.
+
     \begin{figure}[hp]
         \centering
         \includegraphics[width=1\textwidth]{test_srednie}
-        \caption{{\color{red}CAPTION UZUPELNIC}}
+        \caption{Wykres wartości reszt modelu ARMA(5, 5) dopasowanego do zbioru treningowego. Czerwoną przerywaną linią zaznaczono średnią reszt o wartości około $-0.00123$.}
         \label{fig:test_srednie}
     \end{figure}
 
-    Rysunek~\ref{fig:test_srednie}
 
     \subsection{Założenie dotyczące wariancji}\label{subsec:zaozenie-dotyczace-wariancji}
+    opisac co to za test itd
+    Test Wariancji (ARCH Test):
+   P-value: 0.0000
+   WNIOSEK: Wykryto zmienną wariancję (efekt ARCH).
+
+    sprawdzimy jak zmienia sie wariancja:
+    opisać jak sie liczylo ta zmiane rezimu wariancji, co to $C_j$, $V_j$ \dots
+
+    Rysunek~\ref{fig:test_wariancja}
 
     \begin{figure}[hp]
         \centering
         \includegraphics[width=1\textwidth]{test_wariancja}
-        \caption{{\color{red}CAPTION UZUPELNIC}}
+        \caption{Wykresy przedstawiające kolejno: trajektorię reszt modelu ARMA(5, 5) dopasowanego do zbioru treningowego, sumę skumulowanych kwadratów reszt $\left(\rightC_j\right)$ oraz sumę błędów kwadratowych $V(j)$, w zależności od czasu. Czerwoną linią przerywaną zaznaczono punkt $l$, czyli punkt największej zmiany reżimu wariancji.}
         \label{fig:test_wariancja}
     \end{figure}
 
-    Rysunek~\ref{fig:test_wariancja}
 
     \subsection{Założenie dotyczące niezależności}\label{subsec:zaozenie-dotyczace-niezaleznosci}
+
+    co to za test i wgl:
+    Test Niezależności (Ljung-Box, lag=10):
+   P-value: 0.2137
+   WNIOSEK: Reszty są niezależne (brak autokorelacji, biały szum).
 
     Rysunek~\ref{fig:empiryczna_acf_po_dekompozycji_RESZTY} oraz Rysunek~\ref{fig:empiryczna_pacf_po_dekompozycji_RESZTY}
 
     \subsection{Założenie dotyczące normalności rozkładu}\label{subsec:zaozenie-dotyczace-normalnosci-rozkadu}
 
+    Rysunek~\ref{fig:test_normalnosc}
+
+    co to za test i wgl:
+    Test Normalności (Jarque-Bera):
+   P-value: 0.0000
+   WNIOSEK: Rozkład nie jest idealnie normalny (częste w danych fizycznych).
+
     \begin{figure}[hp]
         \centering
         \includegraphics[width=1\textwidth]{test_normalnosc}
-        \caption{{\color{red}CAPTION UZUPELNIC}}
+        \caption{Histogram i empiryczna gęstość oraz wykres kwantylowy (QQ-plot) wartości reszt w porównaniu do rozkładu normalnego (czerwona, przerywana linia) o parametrach wyznaczonych na podstawie badanej próby reszt (średniej i wariancji z próby).}
         \label{fig:test_normalnosc}
     \end{figure}
 
-    Rysunek~\ref{fig:test_normalnosc}
-
     \section{Wnioski}\label{sec:wnioski}
-
+    nie zgadza sie wariancja ani normalnosc wiec nie mozna uzyc arma do modelowania tego typu danych
 
     \section{Podsumowanie}\label{sec:podsumowanie}
+    nie mozna uzywac arma ale i tak daje wyniki zawierajace sie w przedziale ufnosci.
+    i do tego typu danych lepiej uzywac innych modeli ktore uwzgledniaja zmiany wariancji i brak normalnosci np ARCH, GARCH\dots
+
+
+\clearpage
+\phantomsection
+\addcontentsline{toc}{section}{Literatura}
+\nocite{*}
+\bibliographystyle{plain}
+\bibliography{bibliografia}
 
 \end{document}
