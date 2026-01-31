@@ -185,30 +185,28 @@
 
     \subsection{Ocena dopasowania modelu}\label{subsec:ocena_arma}
 
-    \subsubsection{Autokorelacja reszt}
-    Reszty (błędy) w modelu ARMA/ARIMA reprezentują różnicę między obserwowanymi wartościami szeregu czasowego a wartościami przewidywanymi (dopasowanymi) przez model.
-    Poprawne reszty powinny zachowywać się jak „biały szum”, czyli mieć stałą wariancję, zerową średnią i brak autokorelacji.
+    \subsubsection{Porównanie empirycznych i teoretycznych ACV i PACV}
 
-    Rysunek~\ref{fig:empiryczna_acf_po_dekompozycji_RESZTY} przedstawia to i to.
+        Rysunek~\ref{fig:teoretycznaczna_acf} przedstawia to i to.
     Możemy wywnioskowac z tego, że cos tam.
     Interpretujemy to tak i tak
 
     \begin{figure}[hp]
         \centering
-        \includegraphics[width=1\textwidth]{empiryczna_acf_po_dekompozycji_RESZTY}
-        \caption{Wykres współczynnika autokorelacji reszt modelu ARMA(5, 5) w zależności od opóźnienia (parametru $h$). Półprzezroczystym obszarem zaznaczono przedział ufności o poziomie 95\%.}
-        \label{fig:empiryczna_acf_po_dekompozycji_RESZTY}
+        \includegraphics[width=1\textwidth]{teoretycznaczna_acf}
+        \caption{Wykres empirycznego i teoretycznego współczynnika autokorelacji modelu ARMA(5, 5) dopasowanego do zbioru treningowego, w zależności od opóźnienia (parametru $h$). Półprzezroczystym obszarem zaznaczono przedział ufności o poziomie 95\%.}
+        \label{fig:teoretycznaczna_acf}
     \end{figure}
 
-    Rysunek~\ref{fig:empiryczna_pacf_po_dekompozycji_RESZTY} przedstawia to i to.
+    Rysunek~\ref{fig:teoretycznaczna_pacf} przedstawia to i to.
     Możemy wywnioskowac z tego, że cos tam.
     Interpretujemy to tak i tak
 
     \begin{figure}[hp]
         \centering
-        \includegraphics[width=1\textwidth]{empiryczna_pacf_po_dekompozycji_RESZTY}
-        \caption{Wykres współczynnika częściowej autokorelacji reszt modelu ARMA(5, 5) w zależności od opóźnienia (parametru $h$). Półprzezroczystym obszarem zaznaczono przedział ufności o poziomie 95\%.}
-        \label{fig:empiryczna_pacf_po_dekompozycji_RESZTY}
+        \includegraphics[width=1\textwidth]{teoretycznaczna_pacf}
+        \caption{Wykres empirycznego i teoretycznego współczynnika częściowej autokorelacji modelu ARMA(5, 5) dopasowanego do zbioru treningowego, w zależności od opóźnienia (parametru $h$). Półprzezroczystym obszarem zaznaczono przedział ufności o poziomie 95\%.}
+        \label{fig:teoretycznaczna_pacf}
     \end{figure}
 
     \subsubsection{Analiza trajektorii ARMA w porównaniu do badanego szeregu}
@@ -280,7 +278,31 @@
    P-value: 0.2137
    WNIOSEK: Reszty są niezależne (brak autokorelacji, biały szum).
 
-    Rysunek~\ref{fig:empiryczna_acf_po_dekompozycji_RESZTY} oraz Rysunek~\ref{fig:empiryczna_pacf_po_dekompozycji_RESZTY}
+    \subsubsection{Autokorelacja reszt}
+    Reszty (błędy) w modelu ARMA/ARIMA reprezentują różnicę między obserwowanymi wartościami szeregu czasowego a wartościami przewidywanymi (dopasowanymi) przez model.
+    Poprawne reszty powinny zachowywać się jak „biały szum”, czyli mieć stałą wariancję, zerową średnią i brak autokorelacji.
+
+    Rysunek~\ref{fig:empiryczna_acf_po_dekompozycji_RESZTY} przedstawia to i to.
+    Możemy wywnioskowac z tego, że cos tam.
+    Interpretujemy to tak i tak
+
+    \begin{figure}[hp]
+        \centering
+        \includegraphics[width=1\textwidth]{empiryczna_acf_po_dekompozycji_RESZTY}
+        \caption{Wykres współczynnika autokorelacji reszt modelu ARMA(5, 5) w zależności od opóźnienia (parametru $h$). Półprzezroczystym obszarem zaznaczono przedział ufności o poziomie 95\%.}
+        \label{fig:empiryczna_acf_po_dekompozycji_RESZTY}
+    \end{figure}
+
+    Rysunek~\ref{fig:empiryczna_pacf_po_dekompozycji_RESZTY} przedstawia to i to.
+    Możemy wywnioskowac z tego, że cos tam.
+    Interpretujemy to tak i tak
+
+    \begin{figure}[hp]
+        \centering
+        \includegraphics[width=1\textwidth]{empiryczna_pacf_po_dekompozycji_RESZTY}
+        \caption{Wykres współczynnika częściowej autokorelacji reszt modelu ARMA(5, 5) w zależności od opóźnienia (parametru $h$). Półprzezroczystym obszarem zaznaczono przedział ufności o poziomie 95\%.}
+        \label{fig:empiryczna_pacf_po_dekompozycji_RESZTY}
+    \end{figure}
 
     \subsection{Założenie dotyczące normalności rozkładu}\label{subsec:zaozenie-dotyczace-normalnosci-rozkadu}
 
