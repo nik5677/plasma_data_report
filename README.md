@@ -6,7 +6,7 @@
 ### Przygotowanie danych do analizy
 - [ ] zbadanie jakości danych (detekcja wartości spoza zakładanego przedziału, identyfikacja ewentualnych
 braków w danych lub błędów w próbkowaniu),
-- [ ] (opcjonalnie) wyodrębnienie z danych obserwacji do zbioru testowego,
+- [x] (opcjonalnie) wyodrębnienie z danych obserwacji do zbioru testowego,
 - [ ] dekompozycja szeregu czasowego
 	- [ ] wykres ACF oraz PACF dla surowych danych,
 	- [ ] (opcjonalnie) test ADF weryfikujący hipotezę o niestacjonarności dla surowych danych (Augmen-
@@ -33,4 +33,4 @@ ność).
 ### Zakończenie
 - [ ] podsumowanie pracy,
 - [ ] wnioski.
-- [ ] bibliografia
+- [x] bibliografia
