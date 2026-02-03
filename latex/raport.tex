@@ -35,7 +35,10 @@
 \begin{document}
 
     \maketitle
-    \tableofcontents
+{
+  \hypersetup{linkcolor=black} % Tymczasowo zmień kolor na czarny
+  \tableofcontents
+}
 
 
     \section{Wstęp}\label{sec:wstep}
@@ -103,7 +106,7 @@
     \begin{figure}[hp]
         \centering
         \includegraphics[width=1\textwidth]{empiryczna_acf_surowe}
-        \caption{Wykres współczynnika autokorelacji surowych danych ze zbioru treningowego w zależności od opóźnienia (parametru $h$). Półprzezroczystym obszarem zaznaczono przedział ufności o poziomie 95\%.}
+        \caption{Wykres współczynnika autokorelacji surowych danych ze zbioru treningowego w zależności od opóźnienia (parametru $h$). Półprzezroczystym obszarem zaznaczono przedział ufności o poziomie 95\% dla hipotezy o braku korelacji (szum biały).}
         \label{fig:empiryczna_acf_surowe}
     \end{figure}
 
@@ -114,7 +117,7 @@
     \begin{figure}[hp]
         \centering
         \includegraphics[width=1\textwidth]{empiryczna_pacf_surowe}
-        \caption{Wykres współczynnika częściowej autokorelacji surowych danych ze zbioru treningowego w zależności od opóźnienia (parametru $h$). Półprzezroczystym obszarem zaznaczono przedział ufności o poziomie 95\%.}
+        \caption{Wykres współczynnika częściowej autokorelacji surowych danych ze zbioru treningowego w zależności od opóźnienia (parametru $h$). Półprzezroczystym obszarem zaznaczono przedział ufności o poziomie 95\% dla hipotezy o braku korelacji (szum biały).}
         \label{fig:empiryczna_pacf_surowe}
     \end{figure}
 
@@ -146,7 +149,7 @@
     \begin{figure}[hp]
         \centering
         \includegraphics[width=1\textwidth]{empiryczna_acf_po_dekompozycji}
-        \caption{Wykres współczynnika autokorelacji danych ze zbioru treningowego poddanych różnicowaniu w zależności od opóźnienia (parametru $h$). Półprzezroczystym obszarem zaznaczono przedział ufności o poziomie 95\%.}
+        \caption{Wykres współczynnika autokorelacji danych ze zbioru treningowego poddanych różnicowaniu w zależności od opóźnienia (parametru $h$). Półprzezroczystym obszarem zaznaczono przedział ufności o poziomie 95\% dla hipotezy o braku korelacji (szum biały).}
         \label{fig:empiryczna_acf_po_dekompozycji}
     \end{figure}
 
@@ -157,7 +160,7 @@
     \begin{figure}[hp]
         \centering
         \includegraphics[width=1\textwidth]{empiryczna_pacf_po_dekompozycji}
-        \caption{Wykres współczynnika częściowej autokorelacji danych ze zbioru treningowego poddanych różnicowaniu w zależności od opóźnienia (parametru $h$). Półprzezroczystym obszarem zaznaczono przedział ufności o poziomie 95\%.}
+        \caption{Wykres współczynnika częściowej autokorelacji danych ze zbioru treningowego poddanych różnicowaniu w zależności od opóźnienia (parametru $h$). Półprzezroczystym obszarem zaznaczono przedział ufności o poziomie 95\% dla hipotezy o braku korelacji (szum biały).}
         \label{fig:empiryczna_pacf_po_dekompozycji}
     \end{figure}
 
@@ -169,10 +172,9 @@
 
     \subsection{Dobranie rzędu modelu i parametrów}\label{subsec:dobranie_arma}
 
-    co to rzad modelu, BIC, AIC, jak sie dobiera itd
+    co to rzad modelu, BIC, AIC, jak sie dobiera itd, wzory na AIC BIC
     BIC (Bayesowskie Kryterium Informacyjne) i AIC (Kryterium Informacyjne Akaikego)
-    dobralismy rzad modelu korzystajac z kryteriow informacyjnych w pakiecie pdarima???
-    wyszlo: Best model: ARMA(7,6)???
+    dobralismy rzad modelu korzystajac z kryteriow informacyjnych
     (my uzylismy 5,5 z rysunku~\ref{fig:dopasowanie_modelow})
 
     \begin{figure}[hp]
@@ -196,7 +198,7 @@
     \begin{figure}[hp]
         \centering
         \includegraphics[width=1\textwidth]{teoretycznaczna_acf}
-        \caption{Wykres empirycznego i teoretycznego współczynnika autokorelacji modelu ARMA(5, 5) dopasowanego do zbioru treningowego, w zależności od opóźnienia (parametru $h$). Półprzezroczystym obszarem zaznaczono przedział ufności o poziomie 95\%.}
+        \caption{Wykres empirycznego i teoretycznego współczynnika autokorelacji modelu ARMA(5, 5) dopasowanego do zbioru treningowego, w zależności od opóźnienia (parametru $h$). Półprzezroczystym obszarem zaznaczono przedział ufności o poziomie 95\% wyznaczony metodą Monte Carlo (N=1000).}
         \label{fig:teoretycznaczna_acf}
     \end{figure}
 
@@ -207,7 +209,7 @@
     \begin{figure}[hp]
         \centering
         \includegraphics[width=1\textwidth]{teoretycznaczna_pacf}
-        \caption{Wykres empirycznego i teoretycznego współczynnika częściowej autokorelacji modelu ARMA(5, 5) dopasowanego do zbioru treningowego, w zależności od opóźnienia (parametru $h$). Półprzezroczystym obszarem zaznaczono przedział ufności o poziomie 95\%.}
+        \caption{Wykres empirycznego i teoretycznego współczynnika częściowej autokorelacji modelu ARMA(5, 5) dopasowanego do zbioru treningowego, w zależności od opóźnienia (parametru $h$). Półprzezroczystym obszarem zaznaczono przedział ufności o poziomie 95\% wyznaczony metodą Monte Carlo (N=1000).}
         \label{fig:teoretycznaczna_pacf}
     \end{figure}
 
@@ -268,7 +270,7 @@
     \begin{figure}[hp]
         \centering
         \includegraphics[width=1\textwidth]{test_wariancja}
-        \caption{Wykresy przedstawiające kolejno: trajektorię reszt modelu ARMA(5, 5) dopasowanego do zbioru treningowego, sumę skumulowanych kwadratów reszt $\left(\rightC_j\right)$ oraz sumę błędów kwadratowych $V(j)$, w zależności od czasu. Czerwoną linią przerywaną zaznaczono punkt $l$, czyli punkt największej zmiany reżimu wariancji.}
+        \caption{Wykresy przedstawiające kolejno: trajektorię reszt modelu ARMA(5, 5) dopasowanego do zbioru treningowego, sumę skumulowanych kwadratów reszt $C_j$ oraz sumę błędów kwadratowych $V(j)$, w zależności od czasu. Czerwoną linią przerywaną zaznaczono punkt $l$, czyli punkt największej zmiany reżimu wariancji.}
         \label{fig:test_wariancja}
     \end{figure}
 
@@ -291,7 +293,7 @@
     \begin{figure}[hp]
         \centering
         \includegraphics[width=1\textwidth]{empiryczna_acf_po_dekompozycji_RESZTY}
-        \caption{Wykres współczynnika autokorelacji reszt modelu ARMA(5, 5) w zależności od opóźnienia (parametru $h$). Półprzezroczystym obszarem zaznaczono przedział ufności o poziomie 95\%.}
+        \caption{Wykres współczynnika autokorelacji reszt modelu ARMA(5, 5) w zależności od opóźnienia (parametru $h$). Półprzezroczystym obszarem zaznaczono przedział ufności o poziomie 95\% dla hipotezy o braku korelacji (szum biały).}
         \label{fig:empiryczna_acf_po_dekompozycji_RESZTY}
     \end{figure}
 
@@ -302,7 +304,7 @@
     \begin{figure}[hp]
         \centering
         \includegraphics[width=1\textwidth]{empiryczna_pacf_po_dekompozycji_RESZTY}
-        \caption{Wykres współczynnika częściowej autokorelacji reszt modelu ARMA(5, 5) w zależności od opóźnienia (parametru $h$). Półprzezroczystym obszarem zaznaczono przedział ufności o poziomie 95\%.}
+        \caption{Wykres współczynnika częściowej autokorelacji reszt modelu ARMA(5, 5) w zależności od opóźnienia (parametru $h$). Półprzezroczystym obszarem zaznaczono przedział ufności o poziomie 95\% dla hipotezy o braku korelacji (szum biały).}
         \label{fig:empiryczna_pacf_po_dekompozycji_RESZTY}
     \end{figure}
 
