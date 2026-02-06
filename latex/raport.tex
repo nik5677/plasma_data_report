@@ -93,15 +93,18 @@
     \section{Przygotowanie danych do analizy}\label{sec:przygotowanie}
 
     \subsection{Analiza jakości danych}\label{subsec:analiza_jakosci}
-    Coś tam że dane nie mają braków itd.
+
+    Na wstępnym etapie analizy dokonano oceny jakości danych pomiarowych. Sprawdzono obecność braków danych, wartości odstających oraz nieciągłości czasowych. Analizowany szereg czasowy nie zawiera brakujących obserwacji ani duplikatów, a odstępy czasowe pomiędzy kolejnymi próbkami są jednorodne.\newline
+    Wartości natężenia prądu mieszczą się w zakresie fizycznie uzasadnionym dla pracy tokamaka i nie zaobserwowano anomalii mogących wskazywać na błędy pomiarowe. Na tej podstawie dane uznano za poprawne i odpowiednie do dalszej analizy statystycznej.
 
     \subsubsection{Analiza autokorelacji surowych danych}
-
-    wzory i opisanie ACF i PACF co to i wgl
-
-    Rysunek~\ref{fig:empiryczna_acf_surowe} przedstawia to i to.
-    Możemy wywnioskowac z tego, że cos tam.
-    Interpretujemy to tak i tak
+    W celu wstępnej identyfikacji struktury zależności czasowych w szeregu obliczono funkcję autokorelacji (ACF) oraz funkcję częściowej autokorelacji (PACF). \newline
+    Funkcja autokorelacji ACF opisuje stopień liniowej zależności pomiędzy obserwacjami oddzielonymi o h kroków czasowych i dana jest wzorem:
+    \begin{equation}
+        \rho(h)=\frac{Cov(X_t,X_{t-h})}{Var(X_t)}.
+    \end{equation}
+    Z kolei funkcja PACF mierzy korelację pomiędzy $X_t$ i $X_{t-h}$ po wyeliminowaniu wpływu opóźnień pośrednich $1,2,\dots,h-1$, co pozwala na lepszą identyfikację rzędu części autoregresyjnej modelu.
+    Rysunek~\ref{fig:empiryczna_acf_surowe} przedstawia wykres empirycznej funkcji autokorelacji ACF dla surowych danych ze zbioru treningowego. Widoczna jest bardzo wolno malejąca autokorelacja oraz istotne wartości współczynnika dla dużych opóźnień, znacząco przekraczające granice przedziału ufności. Taki kształt ACF jest charakterystyczny dla procesów niestacjonarnych.
 
     \begin{figure}[hp]
         \centering
@@ -110,9 +113,7 @@
         \label{fig:empiryczna_acf_surowe}
     \end{figure}
 
-    Rysunek~\ref{fig:empiryczna_pacf_surowe} przedstawia to i to.
-    Możemy wywnioskowac z tego, że cos tam.
-    Interpretujemy to tak i tak
+    Rysunek~\ref{fig:empiryczna_pacf_surowe} przedstawia wykres funkcji częściowej autokorelacji PACF. Również w tym przypadku obserwuje się istotne wartości dla wielu opóźnień, co potwierdza brak stacjonarności oraz obecność silnej struktury trendowej w danych.
 
     \begin{figure}[hp]
         \centering
@@ -121,17 +122,16 @@
         \label{fig:empiryczna_pacf_surowe}
     \end{figure}
 
-    test ADF weryfikujący hipotezę o niestacjonarności dla surowych danych (Augmented Dickey-Fuller Test) dał takie wyniki:
-    Statystyka testowa = -0.665, p-value = 0.427 => Non-stationary.
+    Dodatkowo przeprowadzono test Augmented Dickey–Fullera (ADF), weryfikujący hipotezę zerową o istnieniu pierwiastka jednostkowego. Otrzymano statystykę testową równą −0.665 oraz wartość p równą 0.427, co oznacza brak podstaw do odrzucenia hipotezy o niestacjonarności szeregu.
 
     \subsection{Dekompozycja szeregu czasowego}\label{subsec:dekompozycja}
 
     \subsubsection{Różnicowanie danych}
-    co to roznicowanie danych itd
-
-    Rysunek~\ref{fig:dekompozycja} przedstawia to i to.
-    Możemy wywnioskowac z tego, że cos tam.
-    Interpretujemy to tak i tak
+    W celu uzyskania stacjonarności szeregu zastosowano różnicowanie pierwszego rzędu. Operacja ta polega na zastąpieniu oryginalnego szeregu $X_t$ nowym szeregiem:
+    \begin{equation}
+        Y_t=X_t-X_{t-1},
+    \end{equation}
+    który opisuje zmiany wartości natężenia prądu pomiędzy kolejnymi chwilami czasu. Różnicowanie jest standardową metodą eliminacji trendu oraz wolnozmiennych składowych deterministycznych w analizie szeregów czasowych. Rysunek~\ref{fig:dekompozycja} przedstawia przebieg szeregu po różnicowaniu. Widoczne jest usunięcie trendu oraz oscylowanie wartości wokół zera, co wskazuje na poprawę własności stacjonarnych. 
 
     \begin{figure}[hp]
         \centering
@@ -141,11 +141,7 @@
     \end{figure}
 
     \subsubsection{Ocena autokorelacji danych po dekompozycji}
-
-    Rysunek~\ref{fig:empiryczna_acf_po_dekompozycji} przedstawia to i to.
-    Możemy wywnioskowac z tego, że cos tam.
-    Interpretujemy to tak i tak
-
+    Na rysunkach ~\ref{fig:empiryczna_acf_po_dekompozycji}  i ~\ref{fig:empiryczna_pacf_po_dekompozycji} przedstawiono odpowiednio wykresy ACF oraz PACF dla danych po różnicowaniu. W przeciwieństwie do danych surowych, autokorelacje szybko zanikają i w większości mieszczą się w granicach przedziału ufności. Świadczy to o skutecznym usunięciu niestacjonarności.
     \begin{figure}[hp]
         \centering
         \includegraphics[width=1\textwidth]{empiryczna_acf_po_dekompozycji}
@@ -153,9 +149,6 @@
         \label{fig:empiryczna_acf_po_dekompozycji}
     \end{figure}
 
-    Rysunek~\ref{fig:empiryczna_pacf_po_dekompozycji} przedstawia to i to.
-    Możemy wywnioskowac z tego, że cos tam.
-    Interpretujemy to tak i tak
 
     \begin{figure}[hp]
         \centering
@@ -164,18 +157,25 @@
         \label{fig:empiryczna_pacf_po_dekompozycji}
     \end{figure}
 
-    test ADF weryfikujący hipotezę o niestacjonarności dla danych po dekompozycji (Augmented Dickey-Fuller Test) dał takie wyniki:
-    Statystyka testowa = -14.148, p-Value = 0.0 => Stationary.
+    Test ADF przeprowadzony dla szeregu po dekompozycji dał statystykę −14.148 oraz wartość p równą 0.0, co jednoznacznie prowadzi do odrzucenia hipotezy o niestacjonarności. Oznacza to, że uzyskany szereg jest stacjonarny i może być modelowany przy użyciu modeli klasy ARMA.
 
 
     \section{Modelowanie przy pomocy ARMA}\label{sec:modelowanie_ARMA}
 
     \subsection{Dobranie rzędu modelu i parametrów}\label{subsec:dobranie_arma}
-
-    co to rzad modelu, BIC, AIC, jak sie dobiera itd, wzory na AIC BIC
-    BIC (Bayesowskie Kryterium Informacyjne) i AIC (Kryterium Informacyjne Akaikego)
-    dobralismy rzad modelu korzystajac z kryteriow informacyjnych
-    (my uzylismy 5,5 z rysunku~\ref{fig:dopasowanie_modelow})
+    Model ARMA$(p,q)$ łączy w sobie składnik autoregresyjny rzędu 
+    $p$ oraz składnik średniej ruchomej rzędu $q$. Jego postać ogólna dana jest wzorem:
+    \begin{equation}
+        X_t=\sum_{i=1}^p \Phi_i X_{t-1} + \sum_{j=1}^q\theta_j\epsilon_{t-1}+\epsilon_t,
+    \end{equation}
+    gdzie $\epsilon_t$ jest białym szumem. \newline
+    Dobór rzędów $p$ i $q$ przeprowadzono na podstawie kryteriów informacyjnych Akaikego ($AIC$) oraz Bayesowskiego ($BIC$), zdefiniowanych jako:
+    \begin{equation}
+        AIC= -2\ln(L)+2k, \newline
+        BIC=-2\ln(L)+k\ln(n),
+    \end{equation}
+    gdzie $L$ jest wartością funkcji wiarygodności, $k$ liczbą parametrów, a $n$ liczbą obserwacji. \newline
+    Na podstawie heatmap przedstawionych na rysunku~\ref{fig:dopasowanie_modelow} stwierdzono, że minimum obu kryteriów osiągane jest dla modelu ARMA(5,5). Parametry modelu zostały wyznaczone metodą największej wiarygodności (MLE), a ich wartości zestawiono w tabeli~\ref{tab:tabela_parametry}.
 
     \begin{figure}[hp]
         \centering
@@ -183,17 +183,12 @@
         \caption{Heatmapa wartości kryteriów AIC oraz BIC w zależności od rzędów $p$ i $q$ modelu ARMA($p, q$) badanego szeregu. Jaśniejszy kolor oznacza niższą wartość kryterium.}
         \label{fig:dopasowanie_modelow}
     \end{figure}
-
-    W tabeli~\ref{tab:tabela_parametry} przedstawiono paraametry wyznaczone metoda najwiekszej wiarygodnosci mle
     \input{tabela_parametry}
 
     \subsection{Ocena dopasowania modelu}\label{subsec:ocena_arma}
 
     \subsubsection{Porównanie empirycznych i teoretycznych ACV i PACV}
-
-        Rysunek~\ref{fig:teoretycznaczna_acf} przedstawia to i to.
-    Możemy wywnioskowac z tego, że cos tam.
-    Interpretujemy to tak i tak
+    Rysunki ~\ref{fig:teoretycznaczna_acf} i ~\ref{fig:teoretycznaczna_pacf} przedstawiają porównanie empirycznych oraz teoretycznych funkcji ACF i PACF dla dopasowanego modelu ARMA(5,5). Widoczna jest bardzo dobra zgodność przebiegów, a większość wartości empirycznych mieści się w granicach przedziałów ufności. Świadczy to o poprawnym odwzorowaniu struktury zależności czasowych przez model.
 
     \begin{figure}[hp]
         \centering
@@ -201,10 +196,6 @@
         \caption{Wykres empirycznego i teoretycznego współczynnika autokorelacji modelu ARMA(5, 5) dopasowanego do zbioru treningowego, w zależności od opóźnienia (parametru $h$). Półprzezroczystym obszarem zaznaczono przedział ufności o poziomie 95\% wyznaczony metodą Monte Carlo (N=1000).}
         \label{fig:teoretycznaczna_acf}
     \end{figure}
-
-    Rysunek~\ref{fig:teoretycznaczna_pacf} przedstawia to i to.
-    Możemy wywnioskowac z tego, że cos tam.
-    Interpretujemy to tak i tak
 
     \begin{figure}[hp]
         \centering
@@ -214,10 +205,8 @@
     \end{figure}
 
     \subsubsection{Analiza trajektorii ARMA w porównaniu do badanego szeregu}
-
-    Rysunek~\ref{fig:przedzialy_ufnosc_ARMA} przedstawia to i to.
-    Możemy wywnioskowac z tego, że cos tam.
-    Interpretujemy to tak i tak
+    Rysunek~\ref{fig:przedzialy_ufnosc_ARMA} przedstawia porównanie trajektorii rzeczywistego szeregu po różnicowaniu z trajektorią generowaną przez model ARMA(5,5). Model poprawnie odwzorowuje dynamikę zmian oraz amplitudę fluktuacji.\newline
+    Na rysunku~\ref{fig:przedzialy_ufnosc_ARMA_PRZEWIDYWANA} zaprezentowano prognozę modelu dla zbioru testowego. Większość obserwacji rzeczywistych mieści się w 95\% przedziałach ufności, co potwierdza dobrą jakość predykcyjną modelu w krótkim horyzoncie czasowym.
 
     \begin{figure}[hp]
         \centering
@@ -225,10 +214,6 @@
         \caption{Trajektoria szeregu czasowego ze zbioru treningowego poddanego różnicowaniu oraz trajektoria dopasowanego modelu ARMA(5, 5) wraz z przedziałami ufności o poziomie 95\%.}
         \label{fig:przedzialy_ufnosc_ARMA}
     \end{figure}
-
-    Rysunek~\ref{fig:przedzialy_ufnosc_ARMA_PRZEWIDYWANA} przedstawia to i to.
-    Możemy wywnioskowac z tego, że cos tam.
-    Interpretujemy to tak i tak
 
     \begin{figure}[hp]
         \centering
@@ -240,13 +225,7 @@
     \section{Weryfikacja założeń dotyczących szumu}\label{sec:weryfikacja-zaozen-dotyczacych-szumu}
 
     \subsection{Założenie dotyczące średniej}\label{subsec:zaozenie-dotyczace-sredniej}
-
-    Rysunek~\ref{fig:test_srednie}
-    co to za test i wgl:
-   Test Średniej (T-test):
-   Średnia reszt: -1.2344e-03
-   P-value: 0.9389
-    WNIOSEK: Brak podstaw do odrzucenia H0. Średnia jest równa 0.
+    Przeprowadzono test t-Studenta dla średniej reszt. Otrzymana wartość p = 0.9389 nie daje podstaw do odrzucenia hipotezy zerowej, co oznacza, że średnia reszt jest statystycznie równa zero (rysunek~\ref{fig:test_srednie}).
 
     \begin{figure}[hp]
         \centering
@@ -257,15 +236,20 @@
 
 
     \subsection{Założenie dotyczące wariancji}\label{subsec:zaozenie-dotyczace-wariancji}
-    opisac co to za test itd
-    Test Wariancji (ARCH Test):
-   P-value: 0.0000
-   WNIOSEK: Wykryto zmienną wariancję (efekt ARCH).
+    W celu weryfikacji założenia o stałej wariancji reszt zastosowano test ARCH (Autoregressive Conditional Heteroskedasticity). Test ten sprawdza, czy wariancja reszt w danym momencie czasu zależy od kwadratów reszt z poprzednich chwil, co jest charakterystyczne dla procesów o zmiennej zmienności.
 
-    sprawdzimy jak zmienia sie wariancja:
-    opisać jak sie liczylo ta zmiane rezimu wariancji, co to $C_j$, $V_j$ \dots
+    Hipoteza zerowa testu ARCH zakłada brak efektu ARCH, czyli stałą wariancję reszt w czasie. Odrzucenie hipotezy zerowej oznacza występowanie heteroskedastyczności warunkowej, czyli zmiennej wariancji zależnej od przeszłych zaburzeń losowych.
 
-    Rysunek~\ref{fig:test_wariancja}
+    Otrzymana wartość p = 0.0000 prowadzi do jednoznacznego odrzucenia hipotezy zerowej, co wskazuje na obecność efektu ARCH w resztach modelu ARMA. Oznacza to, że wariancja procesu nie jest stała w czasie, a model ARMA nie opisuje w pełni struktury zmienności danych.\newline
+    W celu lokalizacji zmiany reżimu wariancji wykorzystano sumy skumulowanych kwadratów reszt:
+    \begin{equation}
+        C_j=\sum_{i=1}^j\epsilon_i^2,
+    \end{equation}
+    oraz funkcję błedu:
+    \begin{equation}
+        V(j)=\frac{j}{n}C_n-C_j.
+    \end{equation}
+    Rysunek~\ref{fig:test_wariancja} wskazuje punkt $l$, w którym zmiana wariancji jest największa.
 
     \begin{figure}[hp]
         \centering
@@ -276,19 +260,13 @@
 
 
     \subsection{Założenie dotyczące niezależności}\label{subsec:zaozenie-dotyczace-niezaleznosci}
+    Do weryfikacji założenia o niezależności reszt zastosowano test Ljunga–Boxa, który bada, czy grupa autokorelacji do zadanego opóźnienia różni się istotnie od zera. Test ten sprawdza hipotezę zerową, że reszty są nieskorelowane, czyli mają charakter białego szumu.
 
-    co to za test i wgl:
-    Test Niezależności (Ljung-Box, lag=10):
-   P-value: 0.2137
-   WNIOSEK: Reszty są niezależne (brak autokorelacji, biały szum).
-
+    Otrzymana wartość p = 0.2137 nie daje podstaw do odrzucenia hipotezy zerowej, co oznacza, że w resztach nie występuje istotna autokorelacja, a model poprawnie opisuje zależności czasowe w średniej procesu.
     \subsubsection{Autokorelacja reszt}
     Reszty (błędy) w modelu ARMA/ARIMA reprezentują różnicę między obserwowanymi wartościami szeregu czasowego a wartościami przewidywanymi (dopasowanymi) przez model.
     Poprawne reszty powinny zachowywać się jak „biały szum”, czyli mieć stałą wariancję, zerową średnią i brak autokorelacji.
-
-    Rysunek~\ref{fig:empiryczna_acf_po_dekompozycji_RESZTY} przedstawia to i to.
-    Możemy wywnioskowac z tego, że cos tam.
-    Interpretujemy to tak i tak
+    Rysunki ~\ref{fig:empiryczna_acf_po_dekompozycji_RESZTY} i ~\ref{fig:empiryczna_pacf_po_dekompozycji_RESZTY} przedstawiają wykresy ACF i PACF reszt. Wszystkie współczynniki mieszczą się w granicach przedziałów ufności, co potwierdza brak autokorelacji i spełnienie założenia białego szum.
 
     \begin{figure}[hp]
         \centering
@@ -297,9 +275,6 @@
         \label{fig:empiryczna_acf_po_dekompozycji_RESZTY}
     \end{figure}
 
-    Rysunek~\ref{fig:empiryczna_pacf_po_dekompozycji_RESZTY} przedstawia to i to.
-    Możemy wywnioskowac z tego, że cos tam.
-    Interpretujemy to tak i tak
 
     \begin{figure}[hp]
         \centering
@@ -309,13 +284,9 @@
     \end{figure}
 
     \subsection{Założenie dotyczące normalności rozkładu}\label{subsec:zaozenie-dotyczace-normalnosci-rozkadu}
-
-    Rysunek~\ref{fig:test_normalnosc}
-
-    co to za test i wgl:
-    Test Normalności (Jarque-Bera):
-   P-value: 0.0000
-   WNIOSEK: Rozkład nie jest idealnie normalny (częste w danych fizycznych).
+    Normalność rozkładu reszt zweryfikowano przy użyciu testu Jarque–Bera, który opiera się na analizie skośności i kurtozy rozkładu. Hipoteza zerowa testu zakłada zgodność rozkładu reszt z rozkładem normalnym.
+    Otrzymana wartość p = 0.0000 prowadzi do odrzucenia hipotezy zerowej, co oznacza, że rozkład reszt istotnie odbiega od normalnego. Tego typu zachowanie jest często obserwowane w danych pochodzących z procesów fizycznych o charakterze turbulentnym. 
+    Histogram oraz wykres QQ (Rysunek~\ref{fig:test_normalnosc}) wskazują na cięższe ogony rozkładu, co jest typowe dla danych fizycznych pochodzących z procesów turbulentnych.
 
     \begin{figure}[hp]
         \centering
@@ -325,11 +296,18 @@
     \end{figure}
 
     \section{Wnioski}\label{sec:wnioski}
-    nie zgadza sie wariancja ani normalnosc wiec nie mozna uzyc arma do modelowania tego typu danych
+    
+    Przeprowadzona analiza natężenia prądu plazmy w fazie stabilnej eksperymentu tokamakowego pozwoliła na ocenę możliwości opisu badanego szeregu czasowego przy użyciu modelu ARMA. Wykazano, że surowe dane są niestacjonarne, jednak zastosowanie różnicowania pierwszego rzędu skutecznie doprowadziło do uzyskania szeregu stacjonarnego, co potwierdziły zarówno analiza ACF i PACF, jak i test Augmented Dickey–Fullera.\newline
+    
+    Na podstawie kryteriów informacyjnych AIC i BIC dobrano model ARMA(5,5), który dobrze odwzorowuje strukturę zależności czasowych obecnych w danych. Analiza dopasowania oraz prognoz krótkoterminowych wykazała, że model poprawnie opisuje średnią dynamikę procesu, a obserwacje rzeczywiste w większości mieszczą się w wyznaczonych przedziałach ufności.\newline
+    
+    Jednocześnie weryfikacja założeń modelowych ujawniła istotne ograniczenia. Pomimo spełnienia założeń o zerowej średniej i braku autokorelacji reszt, stwierdzono występowanie zmiennej wariancji oraz odstępstwa od normalności rozkładu. Wskazuje to, że model ARMA nie w pełni opisuje statystyczne własności fluktuacji prądu plazmy.
 
     \section{Podsumowanie}\label{sec:podsumowanie}
-    nie mozna uzywac arma ale i tak daje wyniki zawierajace sie w przedziale ufnosci.
-    i do tego typu danych lepiej uzywac innych modeli ktore uwzgledniaja zmiany wariancji i brak normalnosci np ARCH, GARCH\dots
+    
+    W pracy zastosowano klasyczne metody analizy szeregów czasowych do modelowania rzeczywistych danych pochodzących z eksperymentu fizycznego. Uzyskane wyniki pokazują, że modele ARMA mogą być użyteczne do opisu krótkoterminowej dynamiki badanego procesu, jednak ich zastosowanie jest ograniczone w przypadku danych charakteryzujących się heteroskedastycznością i nienormalnością rozkładu. \newline
+    
+    W związku z tym dalsze badania powinny obejmować wykorzystanie modeli uwzględniających zmienność wariancji, takich jak ARCH lub GARCH, które lepiej odpowiadają naturze analizowanych danych plazmowych.
 
 
 \clearpage
