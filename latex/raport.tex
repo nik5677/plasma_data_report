@@ -47,7 +47,7 @@
     \subsection{Cel pracy}\label{subsec:cel-pracy}
 
     Celem niniejszej pracy jest analiza statystyczna oraz modelowanie dynamiki szeregu czasowego pochodzącego z rzeczywistego eksperymentu fizycznego.
-    Przedmiotem badań jest natężenie prądu plazmy (ang.\ \emph{plasma current}) zarejestrowane w urządzeniu typu tokamak.
+    Przedmiotem badań jest natężenie prądu plazmy zarejestrowane w urządzeniu typu tokamak.
 
     Głównym zadaniem jest weryfikacja hipotezy o możliwości opisu fluktuacji prądu w fazie stabilnej (tzw.\ \emph{flat-top}) za pomocą liniowego modelu stochastycznego klasy ARMA\@.
     Analiza obejmuje zbadanie stacjonarności procesu, identyfikację rzędu modelu, estymację parametrów oraz weryfikację założeń dotyczących reszt.
@@ -73,7 +73,7 @@
     Do analizy wybrano eksperyment (tzw.\ \emph{shot}) o numerze ID: 30421.
     Pełny przebieg eksperymentu (przedstawiony na rysunku~\ref{fig:fig1}) trwa około 6 sekund.
     Ze względu na niestacjonarny charakter całego procesu (faza rozruchu i wygaszania), do modelowania ARMA wyodrębniono wycinek czasowy odpowiadający fazie stabilnej (rysunek~\ref{fig:fig2}).
-    Zbiór analityczny odpowiada 0,37 sekundy obserwacji i zawiera 1850 próbek.
+    Zbiór analityczny odpowiada 0,37 sekundom obserwacji i zawiera 1850 próbek.
     W celu późniejszej weryfikacji poprawności modelowania ARMA dla przyszłych wartości, został on podzielony na zbiór treningowy - pierwsze 0,32 sekundy (1500 próbek) oraz zbiór testowy - ostatnie 0.05 sekund (250 próbek).
 
     \begin{figure}[hp]
@@ -296,7 +296,7 @@
     \begin{figure}[hp]
         \centering
         \includegraphics[width=1\textwidth]{test_srednie}
-        \caption{Wykres wartości reszt modelu ARMA(5, 5) dopasowanego do zbioru treningowego. Czerwoną przerywaną linią zaznaczono średnią reszt o wartości około $-0.00123$.}
+        \caption{Wykres wartości reszt modelu ARMA(5, 5) dopasowanego do zbioru treningowego. Czerwoną przerywaną linią zaznaczono średnią reszt.}
         \label{fig:test_srednie}
     \end{figure}
 
@@ -326,7 +326,7 @@
     \begin{figure}[hp]
         \centering
         \includegraphics[width=1\textwidth]{test_wariancja}
-        \caption{Wykresy przedstawiające kolejno: trajektorię reszt modelu ARMA(5, 5) dopasowanego do zbioru treningowego, sumę skumulowanych kwadratów reszt $C_j$ oraz sumę błędów kwadratowych $V(j)$, w zależności od czasu. Czerwoną linią przerywaną zaznaczono punkt $l$, czyli punkt największej zmiany reżimu wariancji.}
+        \caption{Wykresy przedstawiające kolejno: trajektorię reszt modelu ARMA(5, 5) dopasowanego do zbioru treningowego, sumę skumulowanych kwadratów reszt $C_j$ oraz sumę błędów kwadratowych $V(j)$, w zależności od numeru próbki. Czerwoną linią przerywaną zaznaczono punkt $l$, czyli punkt największej zmiany reżimu wariancji.}
         \label{fig:test_wariancja}
     \end{figure}
 
@@ -339,7 +339,7 @@
 
     \subsubsection{Autokorelacja reszt}
     Rysunki~\ref{fig:empiryczna_acf_po_dekompozycji_RESZTY}~i~\ref{fig:empiryczna_pacf_po_dekompozycji_RESZTY} przedstawiają wykresy ACF i PACF reszt.
-    Wszystkie współczynniki mieszczą się w granicach przedziałów ufności (dla hipotezy o braku korelacji), co potwierdza brak autokorelacji i spełnienie założenia białego szum.
+    Prawie wszystkie współczynniki mieszczą się w granicach przedziałów ufności (dla hipotezy o braku korelacji), co potwierdza brak autokorelacji.
 
     \begin{figure}[hp]
         \centering
@@ -361,8 +361,7 @@
     Hipoteza zerowa testu zakłada zgodność rozkładu reszt z rozkładem normalnym.
 
     Otrzymana wartość $p = 0$ prowadzi do odrzucenia hipotezy zerowej, co oznacza, że rozkład reszt istotnie odbiega od normalnego.
-    Tego typu zachowanie jest często obserwowane w danych pochodzących z procesów fizycznych o charakterze turbulentnym.
-    Histogram oraz wykres kwantylowy (QQ-plot) (Rysunek~\ref{fig:test_normalnosc}) wskazują na cięższe ogony rozkładu, co jest typowe dla omawianego zjawiska.
+    Histogram oraz wykres kwantylowy (QQ-plot) (Rysunek~\ref{fig:test_normalnosc}) wskazują na cięższe ogony rozkładu, co jest typowe dla danych pochodzących z procesów fizycznych o charakterze turbulentnym.
 
     \begin{figure}[hp]
         \centering
