@@ -157,6 +157,7 @@
     Dodatkowo przeprowadzono test Augmented Dickey–Fullera (ADF), weryfikujący hipotezę zerową o istnieniu pierwiastka jednostkowego.
     Statystyka ta, będąca odpowiednikiem statystyki $t$ dla rozkładu niesymetrycznego, pozwala ocenić siłę dowodów przeciwko niestacjonarności.
     Im niższa (bardziej ujemna) jest jej wartość, tym bardziej prawdopodobna jest stacjonarność procesu.
+
     W analizowanym przypadku otrzymano statystykę testową równą $-0.665$ oraz wartość $p$ równą $0.427$, co ze względu na wynik znacznie wyższy od wartości krytycznych oznacza brak podstaw do odrzucenia hipotezy o niestacjonarności szeregu.
 
     \subsection{Dekompozycja szeregu czasowego}\label{subsec:dekompozycja}
@@ -169,7 +170,8 @@
     \end{equation}
     który opisuje zmiany wartości natężenia prądu pomiędzy kolejnymi chwilami czasu.
     Różnicowanie jest standardową metodą eliminacji trendu oraz wolnozmiennych składowych deterministycznych w analizie szeregów czasowych.
-    Rysunek~\ref{fig:dekompozycja} przedstawia przebieg szeregu po różnicowaniu.
+
+    Rysunek~\ref{fig:dekompozycja} przedstawia trajektorię szeregu po różnicowaniu.
     Widoczne jest usunięcie trendu oraz oscylowanie wartości wokół zera, co wskazuje na poprawę własności stacjonarnych.
 
     \begin{figure}[hp]
@@ -183,6 +185,7 @@
     Na rysunkach~\ref{fig:empiryczna_acf_po_dekompozycji} i~\ref{fig:empiryczna_pacf_po_dekompozycji} przedstawiono odpowiednio wykresy funkcji autokorelacji (ACF) oraz częściowej autokorelacji (PACF) dla szeregu po zróżnicowaniu.
 
     W przeciwieństwie do danych surowych, funkcja ACF charakteryzuje się szybkim, gwałtownym zanikiem wartości współczynników, co potwierdza brak długookresowej pamięci (trendu) w przekształconym procesie.
+
     Analiza wykresu PACF wskazuje na ustąpienie dominującej korelacji dla pierwszego opóźnienia ($h=1$), która we wcześniejszym etapie sugerowała niestacjonarność.
     Zdecydowana większość empirycznych wartości autokorelacji mieści się wewnątrz przedziału ufności, co świadczy o statystycznej nieistotności tych zależności i skutecznym sprowadzeniu szeregu do postaci stacjonarnej.
 
@@ -201,12 +204,13 @@
         \label{fig:empiryczna_pacf_po_dekompozycji}
     \end{figure}
 
-    Test ADF przeprowadzony dla szeregu po dekompozycji dał statystykę −14.148 oraz wartość $p$ równą $1.7039e^{-25} \approx 0$, co jednoznacznie prowadzi do odrzucenia hipotezy o niestacjonarności.
+    Test ADF przeprowadzony dla szeregu po dekompozycji dał statystykę −14.148 oraz wartość $p$ równą $1.7039 \times 10^{-25} \approx 0$, co jednoznacznie prowadzi do odrzucenia hipotezy o niestacjonarności.
     Oznacza to, że uzyskany szereg jest stacjonarny i może być modelowany przy użyciu modeli klasy ARMA.
 
     \section{Modelowanie przy pomocy ARMA}\label{sec:modelowanie_ARMA}
     Po sprowadzeniu szeregu do postaci stacjonarnej, przystąpiono do modelowania jego dynamiki przy wykorzystaniu modeli klasy ARMA (ang. \textit{AutoRegressive Moving Average}).
     Struktura ta pozwala na efektywny opis zależności czasowych poprzez liniową kombinację przeszłych obserwacji (część autoregresyjna) oraz przeszłych błędów losowych (część średniej ruchomej).
+
     W niniejszej sekcji przeprowadzono proces identyfikacji rzędów modelu $p$ i $q$, estymację parametrów oraz diagnostykę dopasowania.
     Cały proces estymacji parametrów modelu oraz wyznaczenia wartości kryteriów informacyjnych zrealizowano przy użyciu biblioteki \texttt{statsmodels}~\cite{seabold2010statsmodels}.
 
@@ -305,7 +309,7 @@
     Hipoteza zerowa testu ARCH zakłada brak efektu ARCH, czyli stałą wariancję reszt w czasie.
     Odrzucenie hipotezy zerowej oznacza występowanie heteroskedastyczności warunkowej, czyli zmiennej wariancji zależnej od przeszłych zaburzeń losowych.
 
-    Otrzymana wartość $p = 2.0279e^{-32} \approx 0$ prowadzi do jednoznacznego odrzucenia hipotezy zerowej, co wskazuje na obecność efektu ARCH w resztach modelu ARMA\@.
+    Otrzymana wartość $p = 2.0279 \times 10^{-32} \approx 0$ prowadzi do jednoznacznego odrzucenia hipotezy zerowej, co wskazuje na obecność efektu ARCH w resztach modelu ARMA\@.
     Oznacza to, że wariancja procesu nie jest stała w czasie, a model ARMA nie opisuje w pełni struktury zmienności danych.
 
     W celu lokalizacji zmiany reżimu wariancji wykorzystano sumy skumulowanych kwadratów reszt:
@@ -378,13 +382,8 @@
     Pomimo spełnienia założeń o zerowej średniej i braku autokorelacji reszt, stwierdzono występowanie zmiennej wariancji oraz odstępstwa od normalności rozkładu.
     Wskazuje to, że model ARMA nie opisuje w pełni statystycznych własności fluktuacji prądu plazmy.
 
-    \section{Podsumowanie}\label{sec:podsumowanie}
-    W pracy zastosowano klasyczne metody analizy szeregów czasowych do modelowania rzeczywistych danych pochodzących z eksperymentu fizycznego.
-    Uzyskane wyniki pokazują, że modele ARMA mogą być użyteczne do opisu krótkoterminowej dynamiki badanego procesu, jednak ich zastosowanie jest ograniczone w przypadku danych charakteryzujących się heteroskedastycznością i nienormalnością rozkładu.
-    
     W związku z tym dalsze badania powinny obejmować wykorzystanie modeli uwzględniających zmienność wariancji, takich jak rodzina modeli GARCH (w tym warianty asymetryczne np.\ EGARCH, TGARCH) czy modele stochastycznej zmienności (SV), które mogą lepiej odpowiadać naturze analizowanych danych.
 
-\clearpage
 \phantomsection
 \addcontentsline{toc}{section}{Literatura}
 \bibliographystyle{unsrt}
