@@ -1,1 +1,2 @@
-
+### Time series analysis of plasma current in the MAST reactor
+This report applies the ARMA(5,5) model to experimental plasma time series, successfully reproducing short-term dependencies and achieving satisfactory predictive accuracy. Despite the good fit, the presence of heteroscedasticity and heavy-tailed residuals highlights the limitations of linear modeling for turbulent data. Future work is therefore recommended to focus on non-linear approaches, such as GARCH or Stochastic Volatility models, to better capture the observed variance instability.
